@@ -8,31 +8,47 @@ class Popular extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            filter: "all"
+            filter: "all",
+            repositories: [],
+            loading: true
         }
     }
 
     languagesArray = ['all', 'javascript', 'ruby', 'java', 'css', 'python']
 
     handleClick = (event) => {
+        const lang = event.target.dataset.language
         this.setState({
-            filter: event.target.dataset.language
+            filter: lang,
+            loading: true
         })
+        fetchPopularRepo(lang).then(resultat => 
+            this.setState({
+                repositories: resultat,
+                loading: false
+            })
+        )
     }
 
     componentDidMount() {
-        fetchPopularRepo().then(repos => {
-            this.setState({repos: repos})
+        // console.log(fetchPopularRepo())
+        fetchPopularRepo().then(resultat => {
+            this.setState({
+                repositories: resultat,
+                loading: false
+            })
         })
     }
 
     render() {
         console.log(this.state)
+        if (this.state.loading === true)
+            return (<div>Loading elements...</div>)
         return (
             <div>
                 <SelectLanguage active={this.state.filter} languagesArray={this.languagesArray} handleChange={this.handleClick}/>
                 <ul>
-                    <GithubItem /> 
+                    {this.state.repositories.map(repo => <GithubItem key={repo.id} repo={repo} />)}
                 </ul>
             </div>
         )
