@@ -1,4 +1,6 @@
 import React from 'react'
+import styles from './selectLanguage.module.css'
+import PropTypes from 'prop-types'
 
 const  SelectLanguage = (props) => {
     const {handleChange, languagesArray, active} = props
@@ -10,10 +12,16 @@ const  SelectLanguage = (props) => {
     // }
 
     return (
-        <ul>
-            {languagesArray.map((language, index) => (<li style={active === language ? {color: '#FF0000'} : null} data-language="all" key={index} onClick={() => handleChange(language)}>{language}</li>))}
+        <ul className={styles.parent}>
+            {languagesArray.map((language, index) => (<li style={active === language ? {color: '#FF0000'} : null} data-language={language} key={index} onClick={handleChange}>{language}</li>))}
         </ul>
     )
+}
+
+SelectLanguage.propTypes = {
+    languagesArray: PropTypes.array.isRequired,
+    active: PropTypes.string.isRequired,
+    handleChange: PropTypes.func.isRequired
 }
 
 export default SelectLanguage

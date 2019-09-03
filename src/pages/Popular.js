@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
+
+import GithubItem from '../components/GithubItem'
 import SelectLanguage from '../components/SelectLanguage'
+import { fetchPopularRepo } from '../api/api'
 
 class Popular extends Component {
     constructor(props) {
@@ -11,25 +14,25 @@ class Popular extends Component {
 
     languagesArray = ['all', 'javascript', 'ruby', 'java', 'css', 'python']
 
-    handleClick = (language) => {
+    handleClick = (event) => {
         this.setState({
-            filter: language
+            filter: event.target.dataset.language
         })
     }
 
+    componentDidMount() {
+        fetchPopularRepo().then(repos => {
+            this.setState({repos: repos})
+        })
+    }
 
     render() {
+        console.log(this.state)
         return (
             <div>
                 <SelectLanguage active={this.state.filter} languagesArray={this.languagesArray} handleChange={this.handleClick}/>
                 <ul>
-                    <li>
-                        <span>#</span>
-                        <img src="" alt=""/>
-                        <a href=""></a>
-                        <span>@</span>
-                        <span>stars</span>
-                    </li>
+                    <GithubItem /> 
                 </ul>
             </div>
         )
