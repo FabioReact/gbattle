@@ -14,7 +14,7 @@ const NavBar = () => (
 const App = () => {
   return (
     <Router>
-      <NavBar />   
+      <NavBar />
       <Routes />
     </Router>
   );

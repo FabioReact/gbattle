@@ -5,7 +5,7 @@ const GithubItem = (props) => {
         <li>
             <span>#</span>
             <img src="" alt=""/>
-            <a href="">{props.repo.name}</a>
+            {/* <a>{props.repo.name}</a> */}
             <span>@</span>
             <span>stars</span>
         </li>
