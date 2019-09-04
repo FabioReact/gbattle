@@ -35,13 +35,21 @@ class Popular extends Component {
         fetchPopularRepo().then(resultat => {
             this.setState({
                 repositories: resultat,
-                loading: false
+                loading: false,
+                yolo: true
             })
         })
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        console.log(prevProps, prevState)
+        if (prevState.yolo !== this.state.yolo)
+            console.log("Loading changed")
+        
+    }
+
     render() {
-        console.log(this.state)
+        // console.log(this.state)
         if (this.state.loading === true)
             return (<div>Loading elements...</div>)
         return (
