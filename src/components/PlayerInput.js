@@ -16,21 +16,28 @@ class PlayerInput extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            username: ""
+          username: "",
+          submitted: false
         }
         // this.changeUsername = this.changeUsername.bind(this)
     }
 
     changeUsername = (event) => {
-        // console.log(event.target.value)
-        this.setState({
-            username: event.target.value
-        })
+      this.setState({
+        username: event.target.value
+      })
+    }
+
+    changeSubmitted = () => {
+      this.setState({
+        submitted: true
+      })
     }
 
     clearUsername = () => {
       this.setState({
-        username: ""
+        username: "",
+        submitted: false
       })
     }
 
@@ -38,15 +45,17 @@ class PlayerInput extends Component {
         // Ces deux méthodes sont identiques
         // const concatenation = "https://github.com/" + this.state.username + ".png?size=200"
         // const templateString = `https://github.com/${this.state.username}.png?size=200`
-        console.log(this.state.username == false)
-        return (
+        if (this.state.username && this.state.submitted) {
+          return <PlayerResult username={this.state.username} onClear={this.clearUsername} />
+        } else {
+          return (
             <div>
                 <p>Player {this.props.number}</p>
                 <input type="text" value={this.state.username} placeholder="Enter user" onChange={this.changeUsername} />
-                <button>Submit</button>
-                {this.state.username && <PlayerResult username={this.state.username} onClear={this.clearUsername} />}
+                <button onClick={this.changeSubmitted}>Submit</button>
             </div>
-        )
+          )
+        }
     }
 }
 
